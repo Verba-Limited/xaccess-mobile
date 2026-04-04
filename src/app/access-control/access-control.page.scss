@@ -1,0 +1,421 @@
+/* Access Control page - match Figma design */
+.access-control-content {
+  --background: #f4f5f8;
+}
+
+ion-header {
+  ion-toolbar {
+    --background: #ffffff;
+    --border-width: 0 0 1px 0;
+    --border-color: #e5e7eb;
+    --padding-start: 1rem;
+    --padding-end: 1rem;
+    --min-height: 52px;
+  }
+
+  ion-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #111827;
+  }
+
+  ion-back-button {
+    --color: #374151;
+  }
+}
+
+.access-control-wrapper {
+  padding: 1rem 1.25rem 7rem;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+/* Tab switcher */
+.tab-switcher {
+  display: flex;
+  gap: 0;
+  margin-bottom: 1.5rem;
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: #374151;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+
+  &.active {
+    background: #f3f4f6;
+    color: #111827;
+    border-radius: 9999px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  }
+}
+
+/* Section */
+.section {
+  margin-bottom: 1.5rem;
+}
+
+.section-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #111827;
+  margin: 0 0 0.75rem;
+}
+
+/* Access type cards */
+.access-type-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.access-type-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem 0.5rem;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #374151;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+
+  .access-type-icon {
+    font-size: 1.5rem;
+    color: #374151;
+  }
+
+  &.active {
+    background: #312e81;
+    border-color: #312e81;
+    color: #ffffff;
+    box-shadow: 0 2px 4px rgba(49, 46, 129, 0.2);
+
+    .access-type-icon {
+      color: #ffffff;
+    }
+  }
+}
+
+/* Photo/QR placeholder - Multi-Entry only */
+.photo-placeholder-section {
+  margin-bottom: 1.5rem;
+}
+
+.photo-placeholder {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: #e5e7eb;
+  margin: 0 auto;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .upload-icon {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    width: 32px;
+    height: 32px;
+    padding: 6px;
+    background: #ffffff;
+    border-radius: 50%;
+    color: #6b7280;
+    font-size: 1.25rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  }
+}
+
+/* Form */
+.access-form {
+  .form-group {
+    margin-bottom: 1.25rem;
+  }
+
+  ion-label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #374151;
+    margin-bottom: 0.35rem;
+  }
+
+  .form-input {
+    --background: #ffffff;
+    --border-radius: 10px;
+    --padding-start: 1rem;
+    --padding-end: 1rem;
+    --min-height: 48px;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    background: #ffffff;
+
+    ion-input,
+    ion-select {
+      --placeholder-color: #9ca3af;
+      --placeholder-opacity: 1;
+    }
+
+    ion-select {
+      max-width: 100%;
+      width: 100%;
+    }
+
+    ion-icon {
+      font-size: 1.25rem;
+      color: #6b7280;
+    }
+  }
+
+  .validity-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  .validity-field {
+    .validity-label {
+      display: block;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: #374151;
+      margin-bottom: 0.35rem;
+    }
+  }
+
+  .checkbox-item {
+    --background: transparent;
+    --inner-padding-end: 0;
+    --min-height: 44px;
+    margin-bottom: 1.5rem;
+
+    ion-checkbox {
+      margin-right: 0.5rem;
+    }
+
+    ion-label {
+      font-size: 0.9375rem;
+      color: #374151;
+    }
+  }
+
+  .generate-btn {
+    --background: #f97316;
+    --background-hover: #ea580c;
+    --background-activated: #ea580c;
+    --background-focused: #f97316;
+    --color: #ffffff;
+    --border-radius: 10px;
+    font-weight: 600;
+    font-size: 1rem;
+    text-transform: none;
+    height: 52px;
+  }
+}
+
+/* Access History tab */
+.history-tab {
+  .search-filter-row {
+    display: flex;
+    gap: 0.75rem;
+    align-items: stretch;
+    margin-bottom: 1rem;
+  }
+
+  .search-input-wrap {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 0 1rem;
+    min-height: 48px;
+
+    .search-icon {
+      font-size: 1.25rem;
+      color: #9ca3af;
+      margin-right: 0.5rem;
+      flex-shrink: 0;
+    }
+
+    .search-input {
+      flex: 1;
+      --padding-start: 0;
+      --padding-end: 0;
+      --placeholder-color: #9ca3af;
+      --placeholder-opacity: 1;
+    }
+  }
+
+  .filter-btn {
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    background: #f97316;
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    ion-icon {
+      font-size: 1.5rem;
+    }
+  }
+
+  .history-section-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #111827;
+    margin: 0 0 0.75rem;
+  }
+
+  .history-list {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 0 1.25rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  }
+
+  .history-item {
+    border-bottom: 1px solid #f3f4f6;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  .history-main {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 0;
+    gap: 0.75rem;
+  }
+
+  .history-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    min-width: 0;
+  }
+
+  .history-name {
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: #111827;
+  }
+
+  .history-status {
+    font-size: 0.8125rem;
+    font-weight: 400;
+    color: #6b7280;
+  }
+
+  .history-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.15rem;
+  }
+
+  .history-id {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #111827;
+  }
+
+  .history-datetime {
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: #6b7280;
+  }
+
+  .history-menu {
+    font-size: 1.25rem;
+    color: #6b7280;
+    cursor: pointer;
+    flex-shrink: 0;
+    padding: 0.25rem;
+  }
+}
+
+/* Bottom nav - same as home */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 70px;
+  background: #ffffff;
+  border-top: 1px solid #e5e7eb;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  padding: 0 0.75rem 10px;
+  padding-bottom: calc(10px + env(safe-area-inset-bottom));
+  z-index: 10;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  text-decoration: none;
+  color: #9ca3af;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  padding: 0.4rem 0.75rem;
+  margin-bottom: 2px;
+
+  ion-icon {
+    font-size: 1.5rem;
+  }
+
+  &.nav-active {
+    color: #f97316;
+    font-weight: 600;
+
+    ion-icon {
+      color: #f97316;
+    }
+  }
+}
+
+.nav-center-btn {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: #f97316;
+  color: #ffffff;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 14px rgba(249, 115, 22, 0.45);
+  margin: 0 0.5rem;
+  margin-bottom: 25px;
+  flex-shrink: 0;
+  cursor: pointer;
+
+  ion-icon {
+    font-size: 1.65rem;
+    font-weight: bold;
+  }
+}

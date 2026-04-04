@@ -1,0 +1,108 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Messages</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="goToCompose()" aria-label="Compose message">
+        <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="messages-content">
+  <div class="messages-wrapper">
+    <!-- Tabs -->
+    <div class="tab-switcher">
+      <button
+        type="button"
+        class="tab-btn"
+        [class.active]="activeTab === 'received'"
+        (click)="setTab('received')"
+      >
+        Received
+      </button>
+      <button
+        type="button"
+        class="tab-btn"
+        [class.active]="activeTab === 'sent'"
+        (click)="setTab('sent')"
+      >
+        Sent
+      </button>
+    </div>
+
+    <!-- Search and Filter -->
+    <div class="search-filter-row">
+      <div class="search-input-wrap">
+        <ion-icon name="search-outline" class="search-icon"></ion-icon>
+        <ion-input
+          [(ngModel)]="searchQuery"
+          placeholder="Search"
+          [ngModelOptions]="{standalone: true}"
+          class="search-input"
+        ></ion-input>
+      </div>
+      <button type="button" class="filter-btn" (click)="openFilter()" aria-label="Filter">
+        <ion-icon name="filter-outline"></ion-icon>
+      </button>
+    </div>
+
+    <p *ngIf="loadError" class="load-error">{{ loadError }}</p>
+    <p *ngIf="loading" class="load-hint">Loading…</p>
+
+    <!-- Message List -->
+    <div class="message-list">
+      <div class="message-item" *ngFor="let item of (activeTab === 'received' ? filteredReceived() : filteredSent())" (click)="openMessage(item)">
+        <div class="message-main">
+          <div class="message-info">
+            <span class="message-title">{{ item.title }}</span>
+            <span class="message-from">{{ activeTab === 'received' ? 'From;' : 'By;' }} {{ item.from }}</span>
+            <span class="message-preview">{{ item.preview }}</span>
+          </div>
+          <div class="message-meta">
+            <div class="message-meta-datetime">
+              <span class="message-date">{{ item.date }}</span>
+              <span class="message-time">{{ item.time }}</span>
+            </div>
+            <ion-icon name="ellipsis-vertical" class="message-menu" (click)="openMessageMenu(item, $event); $event.stopPropagation()"></ion-icon>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Message Action Sheet Modal (centered) -->
+  <ion-modal
+    [isOpen]="showActionSheet"
+    (didDismiss)="dismissActionSheet()"
+    cssClass="messages-action-sheet-modal"
+  >
+    <ng-template ionModalContent>
+      <div class="messages-sheet-content">
+        <button type="button" class="sheet-close-btn" (click)="dismissActionSheet()" aria-label="Close">
+          <ion-icon name="close"></ion-icon>
+        </button>
+        <button type="button" class="sheet-option" (click)="onForwardMessage()">Forward Message</button>
+        <button type="button" class="sheet-option" (click)="onDeleteMessage()">Delete Message</button>
+      </div>
+    </ng-template>
+  </ion-modal>
+
+  <!-- Bottom nav -->
+  <div class="bottom-nav">
+    <a routerLink="/home" class="nav-item nav-active">
+      <ion-icon name="home"></ion-icon>
+      <span>Home</span>
+    </a>
+    <button type="button" class="nav-center-btn" (click)="onCenterAction()" aria-label="Main action">
+      <ion-icon name="close"></ion-icon>
+    </button>
+    <a routerLink="/profile" class="nav-item">
+      <ion-icon name="person-outline"></ion-icon>
+      <span>Profile</span>
+    </a>
+  </div>
+</ion-content>

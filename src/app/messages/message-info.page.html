@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/messages"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Messages</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="message-info-content" *ngIf="message">
+  <div class="message-info-wrapper">
+    <div class="message-header">
+      <div class="message-meta-row">
+        <div class="message-meta-left">
+          <span class="message-from">From: {{ message.from }}</span>
+          <span class="message-to">to me</span>
+        </div>
+        <div class="message-meta-right">
+          <div class="message-meta-datetime">
+            <span class="message-date">{{ message.date }}</span>
+            <span class="message-time">{{ message.time }}</span>
+          </div>
+          <ion-icon name="ellipsis-vertical" class="message-menu" (click)="openMessageMenu($event)"></ion-icon>
+        </div>
+      </div>
+      <h1 class="message-subject">{{ message.title }}</h1>
+    </div>
+
+    <div class="message-body">
+      {{ message.body || 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.' }}
+    </div>
+
+    <ion-button expand="block" class="reply-btn" (click)="reply()">
+      <ion-icon name="reply-outline"></ion-icon>
+      Reply
+    </ion-button>
+  </div>
+
+  <!-- Bottom nav -->
+  <div class="bottom-nav">
+    <a routerLink="/home" class="nav-item nav-active">
+      <ion-icon name="home"></ion-icon>
+      <span>Home</span>
+    </a>
+    <button type="button" class="nav-center-btn" (click)="onCenterAction()" aria-label="Main action">
+      <ion-icon name="close"></ion-icon>
+    </button>
+    <a routerLink="/profile" class="nav-item">
+      <ion-icon name="person-outline"></ion-icon>
+      <span>Profile</span>
+    </a>
+  </div>
+</ion-content>

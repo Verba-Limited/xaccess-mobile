@@ -1,0 +1,7 @@
+{
+  "name": "xaccess",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

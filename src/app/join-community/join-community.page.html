@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button fill="clear" (click)="goBack()">Cancel</ion-button>
+    </ion-buttons>
+    <ion-title>Join estate</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <p class="intro">
+    Your account is not linked to a community yet. Enter the <strong>estate slug</strong> your manager
+    gave you (e.g. <code>harmony-estate</code>), or paste the <strong>community ID</strong> (UUID) if
+    you have it.
+  </p>
+
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <ion-item lines="full">
+      <ion-label position="stacked">Estate slug</ion-label>
+      <ion-input formControlName="slug" placeholder="harmony-estate" autocomplete="off"></ion-input>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label position="stacked">Community ID (optional)</ion-label>
+      <ion-input
+        formControlName="communityId"
+        placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+        autocomplete="off"
+      ></ion-input>
+    </ion-item>
+
+    <ion-button expand="block" type="submit" class="ion-margin-top">
+      Join estate
+    </ion-button>
+  </form>
+</ion-content>

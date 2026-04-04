@@ -1,0 +1,92 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Manage Utility</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="manage-utility-content">
+  <div class="manage-utility-wrapper">
+    <!-- Utility Usage Card -->
+    <div class="utility-usage-card">
+      <div class="card-header">
+        <h2 class="card-title">Utility Usage</h2>
+        <ion-item lines="none" class="period-select">
+          <ion-select
+            [(ngModel)]="period"
+            interface="action-sheet"
+            (ionChange)="onPeriodChange()"
+          >
+            <ion-select-option value="Monthly">Monthly</ion-select-option>
+            <ion-select-option value="Quarterly">Quarterly</ion-select-option>
+            <ion-select-option value="Annual">Annual</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </div>
+
+      <div class="chart-container">
+        <div class="chart-bars">
+          <div class="chart-month" *ngFor="let d of chartData; let i = index">
+            <div class="month-group">
+              <div class="bar power-bar" [style.height.%]="d.power"></div>
+              <div class="bar water-bar" [style.height.%]="d.water"></div>
+            </div>
+            <span class="month-label">{{ months[i] }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="usage-legend">
+        <div class="legend-item">
+          <span class="legend-dot power-dot"></span>
+          <span>Power Usage</span>
+          <span class="legend-value">1,200 kWh</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-dot water-dot"></span>
+          <span>Water Usage</span>
+          <span class="legend-value">1000 Liters</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Control Toggles -->
+    <div class="control-card">
+      <div class="control-row">
+        <span class="control-label">Water Control</span>
+        <ion-toggle
+          [(ngModel)]="waterControlOn"
+          color="success"
+          (ionChange)="onWaterToggle()"
+        ></ion-toggle>
+      </div>
+    </div>
+    <div class="control-card">
+      <div class="control-row">
+        <span class="control-label">Power Control</span>
+        <ion-toggle
+          [(ngModel)]="powerControlOn"
+          color="success"
+          (ionChange)="onPowerToggle()"
+        ></ion-toggle>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom nav -->
+  <div class="bottom-nav">
+    <a routerLink="/home" class="nav-item nav-active">
+      <ion-icon name="home"></ion-icon>
+      <span>Home</span>
+    </a>
+    <button type="button" class="nav-center-btn" (click)="onCenterAction()" aria-label="Main action">
+      <ion-icon name="close"></ion-icon>
+    </button>
+    <a routerLink="/profile" class="nav-item">
+      <ion-icon name="person-outline"></ion-icon>
+      <span>Profile</span>
+    </a>
+  </div>
+</ion-content>

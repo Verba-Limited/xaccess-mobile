@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Profile</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="profile-content">
+  <div class="profile-wrapper">
+    <div class="profile-card">
+      <div class="profile-avatar">
+        <ion-icon name="person"></ion-icon>
+      </div>
+      <h2 class="profile-name">User Name</h2>
+      <p class="profile-email">user@example.com</p>
+    </div>
+
+    <div class="profile-menu">
+      <ion-item button lines="full" class="menu-item" (click)="openSettings()">
+        <ion-icon name="settings-outline" slot="start"></ion-icon>
+        <ion-label>Settings</ion-label>
+        <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+      </ion-item>
+      <ion-item button lines="full" class="menu-item" (click)="openProfileId()">
+        <ion-icon name="id-card-outline" slot="start"></ion-icon>
+        <ion-label>Profile ID</ion-label>
+        <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+      </ion-item>
+      <ion-item button lines="full" class="menu-item" (click)="openAccount()">
+        <ion-icon name="person-outline" slot="start"></ion-icon>
+        <ion-label>Account</ion-label>
+        <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+      </ion-item>
+      <ion-item button lines="full" class="menu-item" (click)="openNotifications()">
+        <ion-icon name="notifications-outline" slot="start"></ion-icon>
+        <ion-label>Notifications</ion-label>
+        <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+      </ion-item>
+      <ion-item button lines="full" class="menu-item" (click)="logout()">
+        <ion-icon name="log-out-outline" slot="start"></ion-icon>
+        <ion-label>Log Out</ion-label>
+        <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+      </ion-item>
+    </div>
+  </div>
+
+  <!-- Bottom nav -->
+  <div class="bottom-nav">
+    <a routerLink="/home" class="nav-item">
+      <ion-icon name="home-outline"></ion-icon>
+      <span>Home</span>
+    </a>
+    <button type="button" class="nav-center-btn" (click)="onCenterAction()" aria-label="Main action">
+      <ion-icon name="close"></ion-icon>
+    </button>
+    <a routerLink="/profile" class="nav-item nav-active">
+      <ion-icon name="person"></ion-icon>
+      <span>Profile</span>
+    </a>
+  </div>
+</ion-content>

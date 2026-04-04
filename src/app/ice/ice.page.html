@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Incase Of Emergency</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ice-content">
+  <div class="ice-wrapper">
+    <p class="ice-instruction">Call any of this phone number in the case of emergency</p>
+
+    <div class="contact-list">
+      <a [href]="'tel:' + contact.phone" class="contact-item" *ngFor="let contact of contacts">
+        <div class="contact-info">
+          <span class="contact-name">{{ contact.name }}</span>
+          <span class="contact-phone">
+            <ion-icon name="call"></ion-icon>
+            {{ contact.phone }}
+          </span>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- Bottom nav -->
+  <div class="bottom-nav">
+    <a routerLink="/home" class="nav-item nav-active">
+      <ion-icon name="home"></ion-icon>
+      <span>Home</span>
+    </a>
+    <button type="button" class="nav-center-btn" (click)="onCenterAction()" aria-label="Main action">
+      <ion-icon name="close"></ion-icon>
+    </button>
+    <a routerLink="/profile" class="nav-item">
+      <ion-icon name="person-outline"></ion-icon>
+      <span>Profile</span>
+    </a>
+  </div>
+</ion-content>

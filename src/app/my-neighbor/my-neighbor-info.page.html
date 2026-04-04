@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/my-neighbor"></ion-back-button>
+    </ion-buttons>
+    <ion-title>My Neighbor</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="neighbor-info-content" *ngIf="resident">
+  <div class="neighbor-info-wrapper">
+    <div class="avatar-placeholder"></div>
+    <span class="role-label">Resident</span>
+    <h1 class="resident-name">{{ resident.name }}</h1>
+    <p class="info-line">{{ resident.email }}</p>
+    <p class="info-line">{{ resident.phone }}</p>
+    <p class="info-line">{{ resident.address }}</p>
+  </div>
+
+  <div class="bottom-nav">
+    <a routerLink="/home" class="nav-item nav-active">
+      <ion-icon name="home"></ion-icon>
+      <span>Home</span>
+    </a>
+    <button type="button" class="nav-center-btn" (click)="onCenterAction()" aria-label="Main action">
+      <ion-icon name="close"></ion-icon>
+    </button>
+    <a routerLink="/profile" class="nav-item">
+      <ion-icon name="person-outline"></ion-icon>
+      <span>Profile</span>
+    </a>
+  </div>
+</ion-content>

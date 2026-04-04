@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Alarms</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="alarms-content">
+  <div class="alarms-wrapper">
+    <p class="alarms-instruction">Report any form of emergency situation by clicking any of the menu below</p>
+
+    <div class="incident-history" *ngIf="recentIncidents.length > 0 || historyLoading">
+      <h2 class="history-heading">Your recent alerts</h2>
+      <p class="history-loading" *ngIf="historyLoading">Loading history…</p>
+      <ion-list lines="none" *ngIf="!historyLoading">
+        <ion-item *ngFor="let inc of recentIncidents" class="incident-row">
+          <ion-label>
+            <h3>{{ inc.category }}</h3>
+            <p>{{ inc.notes || '—' }}</p>
+            <p class="incident-time">{{ formatIncidentWhen(inc.createdAt) }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </div>
+
+    <div class="alarm-list">
+      <div class="alarm-item" *ngFor="let category of alarmCategories">
+        <div class="alarm-row">
+          <div class="alarm-icon-wrap">
+            <img [src]="category.iconPath" [alt]="category.title" class="alarm-icon" />
+          </div>
+          <div class="alarm-body">
+            <h2 class="alarm-title">{{ category.title }}</h2>
+            <p class="alarm-description">{{ category.description }}</p>
+            <button type="button" class="call-for-help-btn" (click)="callForHelp(category)">
+              CALL FOR HELP
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom nav -->
+  <div class="bottom-nav">
+    <a routerLink="/home" class="nav-item nav-active">
+      <ion-icon name="home"></ion-icon>
+      <span>Home</span>
+    </a>
+    <button type="button" class="nav-center-btn" (click)="onCenterAction()" aria-label="Main action">
+      <ion-icon name="close"></ion-icon>
+    </button>
+    <a routerLink="/profile" class="nav-item">
+      <ion-icon name="person-outline"></ion-icon>
+      <span>Profile</span>
+    </a>
+  </div>
+</ion-content>

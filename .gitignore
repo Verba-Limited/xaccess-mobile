@@ -1,0 +1,27 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+www/
+
+# Native platforms (generated)
+android/
+ios/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+.DS_Store
+
+# Angular cache
+.angular/
+
+# Logs
+*.log
+npm-debug.log*

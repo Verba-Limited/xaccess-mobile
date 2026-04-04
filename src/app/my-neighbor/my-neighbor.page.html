@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>My Neighbor</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="my-neighbor-content">
+  <div class="my-neighbor-wrapper">
+    <section class="estate-section">
+      <h1 class="estate-name">{{ estateName }}</h1>
+      <button type="button" class="admin-block" (click)="goToAdministrator()">
+        <span class="admin-label">Estate Administrator</span>
+        <span class="admin-name">{{ administratorName }}</span>
+      </button>
+    </section>
+
+    <section class="members-section">
+      <h2 class="section-title">Estate Member</h2>
+      <div class="search-wrap">
+        <ion-icon name="search-outline" class="search-icon"></ion-icon>
+        <ion-input
+          [(ngModel)]="memberSearch"
+          placeholder="Search"
+          [ngModelOptions]="{standalone: true}"
+          class="search-input"
+        ></ion-input>
+      </div>
+      <div class="member-list">
+        <button
+          type="button"
+          class="member-item"
+          *ngFor="let member of filteredMembers"
+          (click)="goToMemberInfo(member)"
+        >
+          {{ member.name }}
+        </button>
+      </div>
+    </section>
+  </div>
+
+  <div class="bottom-nav">
+    <a routerLink="/home" class="nav-item nav-active">
+      <ion-icon name="home"></ion-icon>
+      <span>Home</span>
+    </a>
+    <button type="button" class="nav-center-btn" (click)="onCenterAction()" aria-label="Main action">
+      <ion-icon name="close"></ion-icon>
+    </button>
+    <a routerLink="/profile" class="nav-item">
+      <ion-icon name="person-outline"></ion-icon>
+      <span>Profile</span>
+    </a>
+  </div>
+</ion-content>

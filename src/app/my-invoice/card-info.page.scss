@@ -1,0 +1,210 @@
+/* Card Info - match Figma design */
+.card-info-content {
+  --background: #ffffff;
+}
+
+.card-info-wrapper {
+  padding: 1.25rem 1.25rem 7rem;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+ion-header {
+  ion-toolbar {
+    --background: #ffffff;
+    --border-width: 0 0 1px 0;
+    --border-color: #e5e7eb;
+    --padding-start: 1rem;
+    --padding-end: 1rem;
+    --min-height: 52px;
+  }
+
+  ion-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #111827;
+  }
+
+  ion-back-button {
+    --color: #374151;
+  }
+}
+
+.section-heading {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 0.5rem;
+}
+
+.section-divider {
+  height: 1px;
+  background: #e5e7eb;
+  margin-bottom: 1rem;
+}
+
+.payment-info-section {
+  margin-bottom: 1.5rem;
+}
+
+.info-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.info-label-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.info-label {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: #111827;
+}
+
+.info-chevron {
+  font-size: 1rem;
+  color: #6b7280;
+}
+
+.info-amount {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.card-details-section {
+  .section-heading {
+    margin-bottom: 0.75rem;
+  }
+}
+
+.card-form {
+  .form-group {
+    margin-bottom: 1rem;
+
+    ion-label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #374151;
+      margin-bottom: 0.35rem;
+    }
+  }
+
+  .form-input {
+    --background: #ffffff;
+    --padding-start: 0.75rem;
+    --padding-end: 0.75rem;
+    --min-height: 44px;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+
+    ion-input {
+      font-size: 0.9375rem;
+      --placeholder-color: #9ca3af;
+    }
+  }
+
+  .form-row {
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  .form-group.half {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .save-card-wrap {
+    margin: 1rem 0 1.5rem;
+
+    ion-checkbox {
+      --size: 20px;
+      --checkbox-background-checked: #f97316;
+      --border-color-checked: #f97316;
+    }
+
+    ion-label {
+      font-size: 0.875rem;
+      color: #374151;
+    }
+  }
+
+  .pay-now-btn {
+    --background: #f97316;
+    --color: #ffffff;
+    --border-radius: 10px;
+    font-weight: 600;
+    text-transform: none;
+    height: 48px;
+  }
+}
+
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 70px;
+  background: #ffffff;
+  border-top: 1px solid #e5e7eb;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  padding: 0 0.75rem 10px;
+  padding-bottom: calc(10px + env(safe-area-inset-bottom));
+  z-index: 10;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  text-decoration: none;
+  color: #9ca3af;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  padding: 0.4rem 0.75rem;
+  margin-bottom: 2px;
+
+  ion-icon {
+    font-size: 1.5rem;
+  }
+
+  &.nav-active {
+    color: #f97316;
+    font-weight: 600;
+
+    ion-icon {
+      color: #f97316;
+    }
+  }
+}
+
+.nav-center-btn {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: #f97316;
+  color: #ffffff;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 14px rgba(249, 115, 22, 0.45);
+  margin: 0 0.5rem;
+  margin-bottom: 25px;
+  flex-shrink: 0;
+  cursor: pointer;
+
+  ion-icon {
+    font-size: 1.65rem;
+    font-weight: bold;
+  }
+}

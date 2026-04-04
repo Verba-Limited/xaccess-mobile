@@ -1,0 +1,75 @@
+<ion-content class="sign-up-content">
+  <div class="sign-up-wrapper">
+    <header class="sign-up-header">
+      <h1>Create Your Account</h1>
+      <p class="subtitle">Enter your credentials to create your account</p>
+    </header>
+
+    <ion-button expand="block" fill="outline" class="google-btn" (click)="continueWithGoogle()">
+      <span class="google-icon" aria-hidden="true"></span>
+      Continue with Google
+    </ion-button>
+
+    <div class="separator" aria-hidden="true">
+      <span class="line"></span>
+      <span class="text">OR</span>
+      <span class="line"></span>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="createAccount()" class="sign-up-form">
+      <ion-item lines="none" class="form-item">
+        <ion-label position="stacked">Full Name</ion-label>
+        <ion-input formControlName="fullName" type="text" placeholder=""></ion-input>
+      </ion-item>
+      <ion-item lines="none" class="form-item">
+        <ion-label position="stacked">Email Address</ion-label>
+        <ion-input formControlName="email" type="email" placeholder=""></ion-input>
+      </ion-item>
+      <ion-item lines="none" class="form-item">
+        <ion-label position="stacked">
+          Community
+          <span *ngIf="communities.length > 0" class="req">*</span>
+        </ion-label>
+        <ion-select
+          formControlName="communityId"
+          interface="action-sheet"
+          [placeholder]="communitiesLoading ? 'Loading…' : 'Select your community'"
+          [disabled]="communitiesLoading || communities.length === 0"
+        >
+          <ion-select-option
+            *ngFor="let c of communities"
+            [value]="c.id"
+          >
+            {{ c.name }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <p *ngIf="communitiesError" class="field-hint error">{{ communitiesError }}</p>
+      <p *ngIf="!communitiesLoading && communities.length === 0 && !communitiesError" class="field-hint">
+        No communities are available yet. You can create an account and join later from the app.
+      </p>
+      <ion-item lines="none" class="form-item password-item">
+        <ion-label position="stacked">Password</ion-label>
+        <ion-input
+          formControlName="password"
+          [type]="showPassword ? 'text' : 'password'"
+          placeholder="Enter Password"
+        ></ion-input>
+        <ion-icon
+          [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"
+          slot="end"
+          (click)="togglePassword()"
+          class="password-toggle"
+        ></ion-icon>
+      </ion-item>
+
+      <ion-button expand="block" type="submit" class="submit-btn">
+        Create Your Account
+      </ion-button>
+    </form>
+
+    <p class="footer-text">
+      Already have an account? <a (click)="goToLogIn()" class="login-link">Log In</a>
+    </p>
+  </div>
+</ion-content>

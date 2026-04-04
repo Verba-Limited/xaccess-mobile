@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/profile"></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="edit()">Edit</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="account-content">
+  <div class="account-wrapper">
+    <div class="profile-picture-placeholder"></div>
+
+    <div class="account-fields" *ngIf="user">
+      <div class="account-field">
+        <span class="field-label">Name</span>
+        <span class="field-value">{{ user.fullName }}</span>
+      </div>
+      <div class="account-field">
+        <span class="field-label">Mobile Number</span>
+        <span class="field-value">{{ user.phone || '—' }}</span>
+      </div>
+      <div class="account-field">
+        <span class="field-label">Email</span>
+        <span class="field-value">{{ user.email }}</span>
+      </div>
+      <div class="account-field">
+        <span class="field-label">Address</span>
+        <span class="field-value">{{ user.unitLabel || '—' }}</span>
+      </div>
+      <div class="account-field password-field">
+        <span class="field-label">Password</span>
+        <span class="field-value">{{ showPassword ? '(hidden)' : '************' }}</span>
+        <ion-icon
+          [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"
+          class="password-toggle"
+          (click)="togglePassword()"
+        ></ion-icon>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom nav -->
+  <div class="bottom-nav">
+    <a routerLink="/home" class="nav-item">
+      <ion-icon name="home-outline"></ion-icon>
+      <span>Home</span>
+    </a>
+    <button type="button" class="nav-center-btn" (click)="onCenterAction()" aria-label="Main action">
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <a routerLink="/profile" class="nav-item nav-active">
+      <ion-icon name="person"></ion-icon>
+      <span>Profile</span>
+    </a>
+  </div>
+</ion-content>

@@ -1,0 +1,13 @@
+.intro {
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--ion-color-medium-shade, #666);
+  margin-bottom: 1rem;
+
+  code {
+    font-size: 13px;
+    background: var(--ion-color-light, #f4f4f4);
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+}

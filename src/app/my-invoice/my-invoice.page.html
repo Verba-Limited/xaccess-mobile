@@ -1,0 +1,88 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>My Invoice</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="my-invoice-content">
+  <div class="my-invoice-wrapper">
+    <!-- Outstanding payment card -->
+    <div class="outstanding-card">
+      <div class="outstanding-main">
+        <div class="outstanding-left">
+          <span class="outstanding-label">Total amount due</span>
+          <span class="outstanding-amount" *ngIf="hasOutstandingPayment">{{ totalAmountDue }}</span>
+          <span class="outstanding-none" *ngIf="!hasOutstandingPayment">No Outstanding Payment</span>
+          <span class="outstanding-due">Due Date: {{ hasOutstandingPayment ? dueDate : '' }}</span>
+        </div>
+        <button
+          type="button"
+          class="pay-now-btn"
+          [class.pay-now-btn-disabled]="!hasOutstandingPayment"
+          (click)="payNow()"
+        >
+          Pay Now
+        </button>
+      </div>
+    </div>
+
+    <!-- Invoice categories -->
+    <button type="button" class="category-item" (click)="openCategory('Utility Fee')">
+      <span>Utility Fee</span>
+      <ion-icon name="chevron-forward"></ion-icon>
+    </button>
+    <button type="button" class="category-item" (click)="openCategory('Service Charge')">
+      <span>Service Charge</span>
+      <ion-icon name="chevron-forward"></ion-icon>
+    </button>
+    <button type="button" class="category-item" (click)="openCategory('Other Invoices')">
+      <span>Other Invoices</span>
+      <ion-icon name="chevron-forward"></ion-icon>
+    </button>
+
+    <!-- Payment History -->
+    <section class="payment-history-section">
+      <div class="payment-history-header">
+        <h2 class="payment-history-title">Payment History</h2>
+        <ion-icon name="chevron-down" class="history-chevron"></ion-icon>
+      </div>
+      <div class="payment-history-divider"></div>
+      <div *ngIf="paymentHistory.length === 0" class="no-history">No History Recorded Yet</div>
+      <div *ngIf="paymentHistory.length > 0" class="history-list">
+        <button
+          type="button"
+          class="history-item"
+          *ngFor="let item of paymentHistory"
+          (click)="openHistoryItem(item)"
+        >
+          <div class="history-left">
+            <span class="history-title">{{ item.title }}</span>
+            <span class="history-meta">Invoice No: {{ item.invoiceNo }}</span>
+          </div>
+          <div class="history-right">
+            <span class="history-amount">{{ item.amount }}</span>
+            <span class="history-date">{{ item.dateStatus }}</span>
+          </div>
+          <ion-icon name="open-outline" class="history-arrow"></ion-icon>
+        </button>
+      </div>
+    </section>
+  </div>
+
+  <div class="bottom-nav">
+    <a routerLink="/home" class="nav-item nav-active">
+      <ion-icon name="home"></ion-icon>
+      <span>Home</span>
+    </a>
+    <button type="button" class="nav-center-btn" (click)="onCenterAction()" aria-label="Main action">
+      <ion-icon name="close"></ion-icon>
+    </button>
+    <a routerLink="/profile" class="nav-item">
+      <ion-icon name="person-outline"></ion-icon>
+      <span>Profile</span>
+    </a>
+  </div>
+</ion-content>

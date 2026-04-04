@@ -1,0 +1,72 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/profile/account"></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="done()">Done</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="edit-account-content">
+  <div class="edit-account-wrapper">
+    <div class="profile-picture-section">
+      <div class="profile-picture-placeholder">
+        <ion-icon name="cloud-upload-outline" class="upload-icon"></ion-icon>
+      </div>
+    </div>
+
+    <form [formGroup]="form" class="edit-account-form">
+      <div class="form-group">
+        <ion-label>Name</ion-label>
+        <ion-item lines="none" class="form-input">
+          <ion-input formControlName="name" placeholder="Input your name"></ion-input>
+        </ion-item>
+      </div>
+
+      <div class="form-group">
+        <ion-label>Mobile Number</ion-label>
+        <ion-item lines="none" class="form-input">
+          <ion-input formControlName="mobileNumber" type="tel" placeholder="Input your mobile number"></ion-input>
+        </ion-item>
+      </div>
+
+      <div class="form-group">
+        <ion-label>Email</ion-label>
+        <ion-item lines="none" class="form-input">
+          <ion-input formControlName="email" type="email" placeholder="Input your email address"></ion-input>
+        </ion-item>
+      </div>
+
+      <div class="form-group">
+        <ion-label>Address</ion-label>
+        <ion-item lines="none" class="form-input">
+          <ion-input formControlName="address" placeholder="Input your home address"></ion-input>
+        </ion-item>
+      </div>
+
+      <div class="form-group">
+        <ion-label>Password</ion-label>
+        <p class="change-password-hint">
+          <a (click)="changePassword()" class="change-password-link">Change Password</a>
+        </p>
+      </div>
+    </form>
+  </div>
+
+  <!-- Bottom nav -->
+  <div class="bottom-nav">
+    <a routerLink="/home" class="nav-item">
+      <ion-icon name="home-outline"></ion-icon>
+      <span>Home</span>
+    </a>
+    <button type="button" class="nav-center-btn" (click)="onCenterAction()" aria-label="Main action">
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <a routerLink="/profile" class="nav-item nav-active">
+      <ion-icon name="person"></ion-icon>
+      <span>Profile</span>
+    </a>
+  </div>
+</ion-content>

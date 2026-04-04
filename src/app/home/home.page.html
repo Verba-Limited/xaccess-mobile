@@ -1,0 +1,140 @@
+<ion-header class="user-home-header">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <span class="header-title">Today</span>
+    </ion-buttons>
+    <ion-buttons slot="end" class="header-date">
+      <ion-icon name="calendar-outline"></ion-icon>
+      <span>{{ todayDate }}</span>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="user-home-content">
+  <div class="user-home-wrapper">
+    <ion-card *ngIf="communityMissing" class="join-estate-banner" (click)="goToJoinCommunity()">
+      <ion-card-content>
+        <p class="join-estate-title">No estate linked</p>
+        <p class="join-estate-text">
+          Join your community to use access tokens, access history, and more.
+        </p>
+        <ion-button size="small" fill="solid" color="warning">Join estate</ion-button>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Feature cards: Access & My Invoice span 2 rows (tall), Messaging & Manage Utility 1 row (short) -->
+    <section class="feature-cards">
+      <ion-card button class="feature-card card-access card-tall" (click)="goToAccessControl()">
+        <ion-card-content>
+          <div class="card-inner">
+            <span class="card-icon-wrap card-icon-wrap-light" style="margin-top: 25px;"><ion-icon name="key-outline" class="card-icon"></ion-icon></span>
+            <div class="card-text" style="margin-top: 45px;">
+              <h3>Access control</h3>
+              <p class="card-link">Generate token <span class="card-arrow-wrap card-arrow-wrap-light"><ion-icon name="arrow-forward-outline"></ion-icon></span></p>
+            </div>
+          </div>
+        </ion-card-content>
+      </ion-card>
+      <ion-card button class="feature-card card-messaging" (click)="goToMessaging()">
+        <ion-card-content>
+          <div class="card-inner">
+            <span class="card-icon-wrap"><ion-icon name="chatbubble-outline" class="card-icon"></ion-icon></span>
+            <div class="card-text">
+              <h3>Messaging</h3>
+              <p class="card-link">View <span class="card-arrow-wrap"><ion-icon name="arrow-forward-outline"></ion-icon></span></p>
+            </div>
+          </div>
+        </ion-card-content>
+      </ion-card>
+      <ion-card button class="feature-card card-utility" (click)="goToManageUtility()">
+        <ion-card-content>
+          <div class="card-inner">
+            <span class="card-icon-wrap"><ion-icon name="construct-outline" class="card-icon"></ion-icon></span>
+            <div class="card-text">
+              <h3>Manage Utility</h3>
+              <p class="card-link">View <span class="card-arrow-wrap"><ion-icon name="arrow-forward-outline"></ion-icon></span></p>
+            </div>
+          </div>
+        </ion-card-content>
+      </ion-card>
+      <ion-card button class="feature-card card-invoice card-tall" (click)="goToMyInvoice()">
+        <ion-card-content>
+          <div class="card-inner">
+            <span class="card-icon-wrap" style="margin-top: 25px;"><ion-icon name="receipt-outline" class="card-icon"></ion-icon></span>
+            <div class="card-text" style="margin-top: 45px;">
+              <h3>My Invoice</h3>
+              <p class="card-link">View <span class="card-arrow-wrap"><ion-icon name="arrow-forward-outline"></ion-icon></span></p>
+            </div>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </section>
+
+    <!-- Quick link -->
+    <section class="quick-link-section">
+      <h2 class="section-title">Quick link</h2>
+      <div class="quick-link-buttons">
+        <button type="button" class="quick-link-btn" (click)="goToAlarms()">
+          <ion-icon name="warning-outline"></ion-icon>
+          <span>Alarms</span>
+        </button>
+        <button type="button" class="quick-link-btn" (click)="goToIce()">
+          <ion-icon name="medkit-outline"></ion-icon>
+          <span>ICE</span>
+        </button>
+        <button type="button" class="quick-link-btn" (click)="goToResident()">
+          <ion-icon name="people-outline"></ion-icon>
+          <span>Resident</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Access History -->
+    <section class="access-history-section">
+      <div class="section-header">
+        <h2 class="section-title">Access History</h2>
+        <a (click)="viewAllHistory()" class="view-all-link">View all</a>
+      </div>
+      <div *ngIf="accessHistoryLoading" class="ion-padding ion-text-center">
+        <ion-spinner name="crescent"></ion-spinner>
+        <p class="ion-margin-top text-muted">Loading history…</p>
+      </div>
+      <p *ngIf="!accessHistoryLoading && accessHistoryError" class="ion-padding text-muted ion-text-center">
+        {{ accessHistoryError }}
+      </p>
+      <div *ngIf="!accessHistoryLoading && !accessHistoryError && accessHistory.length === 0" class="ion-padding ion-text-center text-muted">
+        No access events yet.
+      </div>
+      <div class="history-list" *ngIf="!accessHistoryLoading && accessHistory.length > 0">
+        <div class="history-item" *ngFor="let item of accessHistory">
+          <div class="history-main">
+            <div class="history-info">
+              <span class="history-name">{{ item.name }}</span>
+              <span class="history-status">Status: {{ item.status }}</span>
+            </div>
+            <div class="history-meta">
+              <span class="history-id">{{ item.id }}</span>
+              <span class="history-datetime">{{ item.datetime }}</span>
+            </div>
+            <ion-icon name="ellipsis-vertical" class="history-menu" (click)="openHistoryMenu(item)"></ion-icon>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Bottom nav bar -->
+  <div class="bottom-nav">
+    <a routerLink="/home" class="nav-item nav-active">
+      <ion-icon name="home"></ion-icon>
+      <span>Home</span>
+    </a>
+    <button type="button" class="nav-center-btn" (click)="onCenterAction()" aria-label="Main action">
+      <ion-icon name="close"></ion-icon>
+    </button>
+    <a routerLink="/profile" class="nav-item">
+      <ion-icon name="person-outline"></ion-icon>
+      <span>Profile</span>
+    </a>
+  </div>
+</ion-content>

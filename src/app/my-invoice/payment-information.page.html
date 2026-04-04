@@ -1,0 +1,65 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/my-invoice"></ion-back-button>
+    </ion-buttons>
+    <ion-title>My Invoice</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="payment-info-content">
+  <div class="payment-info-wrapper">
+    <section class="payment-info-section">
+      <h2 class="section-heading">Payment Information</h2>
+      <div class="section-divider"></div>
+      <div class="info-row">
+        <div class="info-label-wrap">
+          <span class="info-label">{{ selectedCategory }}</span>
+          <ion-icon name="chevron-down" class="info-chevron"></ion-icon>
+        </div>
+        <span class="info-amount">{{ amount }}</span>
+      </div>
+    </section>
+
+    <section class="payment-method-section">
+      <h2 class="section-heading">Choose Payment Method</h2>
+      <button
+        type="button"
+        class="method-card"
+        [disabled]="paystackBusy"
+        (click)="payWithPaystack()"
+      >
+        <div class="method-left">
+          <div class="method-icon paystack-icon">
+            <ion-icon name="layers-outline"></ion-icon>
+          </div>
+          <span class="method-name">Paystack</span>
+        </div>
+        <ion-icon name="chevron-forward" class="method-arrow"></ion-icon>
+      </button>
+      <button type="button" class="method-card" (click)="payWithCard()">
+        <div class="method-left">
+          <div class="method-icon card-icon">
+            <ion-icon name="card-outline"></ion-icon>
+          </div>
+          <span class="method-name">Card</span>
+        </div>
+        <ion-icon name="chevron-forward" class="method-arrow"></ion-icon>
+      </button>
+    </section>
+  </div>
+
+  <div class="bottom-nav">
+    <a routerLink="/home" class="nav-item nav-active">
+      <ion-icon name="home"></ion-icon>
+      <span>Home</span>
+    </a>
+    <button type="button" class="nav-center-btn" (click)="onCenterAction()" aria-label="Main action">
+      <ion-icon name="close"></ion-icon>
+    </button>
+    <a routerLink="/profile" class="nav-item">
+      <ion-icon name="person-outline"></ion-icon>
+      <span>Profile</span>
+    </a>
+  </div>
+</ion-content>

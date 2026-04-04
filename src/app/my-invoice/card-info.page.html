@@ -1,0 +1,97 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/my-invoice/payment"></ion-back-button>
+    </ion-buttons>
+    <ion-title>My Invoice</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="card-info-content">
+  <div class="card-info-wrapper">
+    <section class="payment-info-section">
+      <h2 class="section-heading">Payment Information</h2>
+      <div class="section-divider"></div>
+      <div class="info-row">
+        <div class="info-label-wrap">
+          <span class="info-label">{{ selectedCategory }}</span>
+          <ion-icon name="chevron-down" class="info-chevron"></ion-icon>
+        </div>
+        <span class="info-amount">{{ amount }}</span>
+      </div>
+    </section>
+
+    <section class="card-details-section">
+      <h2 class="section-heading">Input Card Details</h2>
+      <form [formGroup]="form" (ngSubmit)="payNow()" class="card-form">
+        <div class="form-group">
+          <ion-label>Name</ion-label>
+          <ion-item lines="none" class="form-input">
+            <ion-input
+              formControlName="name"
+              placeholder="Cardholder name"
+            ></ion-input>
+          </ion-item>
+        </div>
+        <div class="form-group">
+          <ion-label>Card Number</ion-label>
+          <ion-item lines="none" class="form-input">
+            <ion-input
+              formControlName="cardNumber"
+              placeholder="Card number"
+              type="tel"
+              inputmode="numeric"
+            ></ion-input>
+          </ion-item>
+        </div>
+        <div class="form-row">
+          <div class="form-group half">
+            <ion-label>Expire Date</ion-label>
+            <ion-item lines="none" class="form-input">
+              <ion-input
+                formControlName="expireDate"
+                placeholder="MM/YY"
+              ></ion-input>
+            </ion-item>
+          </div>
+          <div class="form-group half">
+            <ion-label>CW</ion-label>
+            <ion-item lines="none" class="form-input">
+              <ion-input
+                formControlName="cvv"
+                placeholder="CVV"
+                type="tel"
+                inputmode="numeric"
+              ></ion-input>
+            </ion-item>
+          </div>
+        </div>
+        <div class="save-card-wrap">
+          <ion-checkbox formControlName="saveCard" labelPlacement="end">Save my card details</ion-checkbox>
+        </div>
+        <ion-button
+          expand="block"
+          type="submit"
+          class="pay-now-btn"
+          [disabled]="paying || loading"
+        >
+          {{ paying ? 'Processing…' : 'Pay Now' }}
+        </ion-button>
+      </form>
+    </section>
+  </div>
+
+  <div class="bottom-nav">
+    <a routerLink="/home" class="nav-item nav-active">
+      <ion-icon name="home"></ion-icon>
+      <span>Home</span>
+    </a>
+    <button type="button" class="nav-center-btn" (click)="onCenterAction()" aria-label="Main action">
+      <ion-icon name="close"></ion-icon>
+    </button>
+    <a routerLink="/profile" class="nav-item">
+      <ion-icon name="person-outline"></ion-icon>
+      <span>Profile</span>
+    </a>
+  </div>
+</ion-content>

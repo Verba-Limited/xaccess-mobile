@@ -1,0 +1,241 @@
+/* Manage Utility page - match Figma design */
+.manage-utility-content {
+  --background: #ffffff;
+}
+
+.manage-utility-wrapper {
+  padding: 1.25rem 1.25rem 7rem;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+ion-header {
+  ion-toolbar {
+    --background: #ffffff;
+    --border-width: 0 0 1px 0;
+    --border-color: #e5e7eb;
+    --padding-start: 1rem;
+    --padding-end: 1rem;
+    --min-height: 52px;
+  }
+
+  ion-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #111827;
+  }
+
+  ion-back-button {
+    --color: #374151;
+  }
+}
+
+/* Utility Usage Card */
+.utility-usage-card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 1.25rem;
+  margin-bottom: 1.25rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.card-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
+}
+
+.period-select {
+  --background: transparent;
+  --padding-start: 0.5rem;
+  --padding-end: 0.5rem;
+  --min-height: 36px;
+
+  ion-select {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #374151;
+  }
+}
+
+.chart-container {
+  margin-bottom: 1rem;
+}
+
+.chart-bars {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 4px;
+  height: 120px;
+  padding: 0 0.25rem;
+}
+
+.chart-month {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.month-group {
+  display: flex;
+  gap: 2px;
+  align-items: flex-end;
+  height: 100px;
+  width: 100%;
+  max-width: 24px;
+}
+
+.bar {
+  flex: 1;
+  min-width: 4px;
+  border-radius: 3px 3px 0 0;
+  min-height: 4px;
+}
+
+.power-bar {
+  background: #3b82f6;
+}
+
+.water-bar {
+  background: #a78bfa;
+}
+
+.month-label {
+  font-size: 0.625rem;
+  font-weight: 500;
+  color: #6b7280;
+}
+
+.usage-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid #f3f4f6;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8125rem;
+  color: #374151;
+}
+
+.legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.power-dot {
+  background: #3b82f6;
+}
+
+.water-dot {
+  background: #a78bfa;
+}
+
+.legend-value {
+  margin-left: auto;
+  font-weight: 600;
+  color: #111827;
+}
+
+/* Control cards */
+.control-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.control-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.control-label {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+/* Bottom nav */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 70px;
+  background: #ffffff;
+  border-top: 1px solid #e5e7eb;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  padding: 0 0.75rem 10px;
+  padding-bottom: calc(10px + env(safe-area-inset-bottom));
+  z-index: 10;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  text-decoration: none;
+  color: #9ca3af;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  padding: 0.4rem 0.75rem;
+  margin-bottom: 2px;
+
+  ion-icon {
+    font-size: 1.5rem;
+  }
+
+  &.nav-active {
+    color: #f97316;
+    font-weight: 600;
+
+    ion-icon {
+      color: #f97316;
+    }
+  }
+}
+
+.nav-center-btn {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: #f97316;
+  color: #ffffff;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 14px rgba(249, 115, 22, 0.45);
+  margin: 0 0.5rem;
+  margin-bottom: 25px;
+  flex-shrink: 0;
+  cursor: pointer;
+
+  ion-icon {
+    font-size: 1.65rem;
+    font-weight: bold;
+  }
+}

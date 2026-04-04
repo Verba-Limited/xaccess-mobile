@@ -1,0 +1,270 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Access Control</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="access-control-content">
+  <div class="access-control-wrapper">
+    <!-- Segmented control -->
+    <div class="tab-switcher">
+      <button
+        type="button"
+        class="tab-btn"
+        [class.active]="activeTab === 'generate'"
+        (click)="setTab('generate')"
+      >
+        Generate Token
+      </button>
+      <button
+        type="button"
+        class="tab-btn"
+        [class.active]="activeTab === 'history'"
+        (click)="setTab('history')"
+      >
+        Access History
+      </button>
+    </div>
+
+    <div *ngIf="activeTab === 'generate'" class="generate-tab">
+      <!-- Select Access Type -->
+      <section class="section">
+        <h2 class="section-title">Select Access Type</h2>
+        <div class="access-type-cards">
+          <button
+            type="button"
+            class="access-type-card"
+            [class.active]="selectedAccessType === 'one-time'"
+            (click)="selectAccessType('one-time')"
+          >
+            <ion-icon name="exit-outline" class="access-type-icon"></ion-icon>
+            <span>One-Time</span>
+          </button>
+          <button
+            type="button"
+            class="access-type-card"
+            [class.active]="selectedAccessType === 'multi-entry'"
+            (click)="selectAccessType('multi-entry')"
+          >
+            <ion-icon name="repeat-outline" class="access-type-icon"></ion-icon>
+            <span>Multi-Entry</span>
+          </button>
+          <button
+            type="button"
+            class="access-type-card"
+            [class.active]="selectedAccessType === 'event'"
+            (click)="selectAccessType('event')"
+          >
+            <ion-icon name="calendar-outline" class="access-type-icon"></ion-icon>
+            <span>Event</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Photo/QR placeholder - shown for Multi-Entry -->
+      <section *ngIf="selectedAccessType === 'multi-entry'" class="photo-placeholder-section">
+        <div class="photo-placeholder">
+          <ion-icon name="cloud-upload-outline" class="upload-icon"></ion-icon>
+        </div>
+      </section>
+
+      <!-- Form: One-Time & Multi-Entry -->
+      <form *ngIf="selectedAccessType !== 'event'" [formGroup]="form" (ngSubmit)="generateToken()" class="access-form">
+        <div class="form-group">
+          <ion-label>Apartment</ion-label>
+          <ion-item lines="none" class="form-input">
+            <ion-select formControlName="apartment" placeholder="Select your apartment" interface="action-sheet">
+              <ion-select-option value="A101">A101</ion-select-option>
+              <ion-select-option value="A102">A102</ion-select-option>
+              <ion-select-option value="B201">B201</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </div>
+
+        <div class="form-group">
+          <ion-label>Guest Name</ion-label>
+          <ion-item lines="none" class="form-input">
+            <ion-input formControlName="guestName" placeholder="Input your guest name"></ion-input>
+          </ion-item>
+        </div>
+
+        <div class="form-group">
+          <ion-label>Arrival Date</ion-label>
+          <ion-item lines="none" class="form-input">
+            <ion-input formControlName="arrivalDate" type="date" placeholder="Select arrival date"></ion-input>
+          </ion-item>
+        </div>
+
+        <div class="form-group">
+          <ion-label>Validity Period</ion-label>
+          <div class="validity-row">
+            <div class="validity-field">
+              <span class="validity-label">From</span>
+              <ion-item lines="none" class="form-input">
+                <ion-input formControlName="validityFrom" type="date" placeholder="Select date"></ion-input>
+              </ion-item>
+            </div>
+            <div class="validity-field">
+              <span class="validity-label">To</span>
+              <ion-item lines="none" class="form-input">
+                <ion-input formControlName="validityTo" type="date" placeholder="Select date"></ion-input>
+              </ion-item>
+            </div>
+          </div>
+        </div>
+
+        <ion-item lines="none" class="checkbox-item">
+          <ion-checkbox formControlName="shareQrCode" slot="start"></ion-checkbox>
+          <ion-label>Share QR Code</ion-label>
+        </ion-item>
+
+        <ion-button expand="block" type="submit" class="generate-btn">
+          Generate Access token
+        </ion-button>
+      </form>
+
+      <!-- Form: Event -->
+      <form *ngIf="selectedAccessType === 'event'" [formGroup]="eventForm" (ngSubmit)="generateToken()" class="access-form">
+        <div class="form-group">
+          <ion-label>Apartment</ion-label>
+          <ion-item lines="none" class="form-input">
+            <ion-select formControlName="apartment" placeholder="Select your apartment" interface="action-sheet">
+              <ion-select-option value="A101">A101</ion-select-option>
+              <ion-select-option value="A102">A102</ion-select-option>
+              <ion-select-option value="B201">B201</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </div>
+
+        <div class="form-group">
+          <ion-label>Event Name</ion-label>
+          <ion-item lines="none" class="form-input">
+            <ion-input formControlName="eventName" placeholder="Input your guest name"></ion-input>
+          </ion-item>
+        </div>
+
+        <div class="form-group">
+          <ion-label>Event Date</ion-label>
+          <div class="validity-row">
+            <div class="validity-field">
+              <span class="validity-label">From</span>
+              <ion-item lines="none" class="form-input">
+                <ion-input formControlName="eventDateFrom" type="date" placeholder="Select date"></ion-input>
+              </ion-item>
+            </div>
+            <div class="validity-field">
+              <span class="validity-label">To</span>
+              <ion-item lines="none" class="form-input">
+                <ion-input formControlName="eventDateTo" type="date" placeholder="Select date"></ion-input>
+              </ion-item>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <ion-label>Expected Time of Arrival</ion-label>
+          <div class="validity-row">
+            <div class="validity-field">
+              <span class="validity-label">From</span>
+              <ion-item lines="none" class="form-input">
+                <ion-input formControlName="arrivalTimeFrom" type="time" placeholder="Select date"></ion-input>
+              </ion-item>
+            </div>
+            <div class="validity-field">
+              <span class="validity-label">To</span>
+              <ion-item lines="none" class="form-input">
+                <ion-input formControlName="arrivalTimeTo" type="time" placeholder="Select date"></ion-input>
+              </ion-item>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <ion-label>Event Location</ion-label>
+          <ion-item lines="none" class="form-input">
+            <ion-select formControlName="eventLocation" placeholder="Select your apartment" interface="action-sheet">
+              <ion-select-option value="Lobby">Lobby</ion-select-option>
+              <ion-select-option value="Pool">Pool</ion-select-option>
+              <ion-select-option value="Gym">Gym</ion-select-option>
+              <ion-select-option value="Hall">Hall</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </div>
+
+        <ion-button expand="block" type="submit" class="generate-btn">
+          Generate Access token
+        </ion-button>
+      </form>
+    </div>
+
+    <div *ngIf="activeTab === 'history'" class="history-tab">
+      <div class="search-filter-row">
+        <div class="search-input-wrap">
+          <ion-icon name="search-outline" class="search-icon"></ion-icon>
+          <ion-input
+            [(ngModel)]="historySearch"
+            placeholder="Search"
+            [ngModelOptions]="{standalone: true}"
+            class="search-input"
+          ></ion-input>
+        </div>
+        <button type="button" class="filter-btn" (click)="openHistoryFilter()" aria-label="Filter">
+          <ion-icon name="filter-outline"></ion-icon>
+        </button>
+      </div>
+
+      <h2 class="history-section-title">Issued tokens</h2>
+      <p class="ion-padding-horizontal text-muted" style="font-size: 13px; margin-top: 0">
+        Tokens you created. The QR secret is only shown once at creation.
+      </p>
+
+      <div *ngIf="tokensLoading" class="ion-padding ion-text-center">
+        <ion-spinner name="crescent"></ion-spinner>
+        <p class="ion-margin-top">Loading…</p>
+      </div>
+      <p *ngIf="!tokensLoading && tokensError" class="ion-padding ion-text-center text-muted">
+        {{ tokensError }}
+      </p>
+      <div
+        *ngIf="!tokensLoading && !tokensError && filteredTokenRows.length === 0"
+        class="ion-padding ion-text-center text-muted"
+      >
+        No tokens yet. Generate one in the first tab.
+      </div>
+
+      <div class="history-list" *ngIf="!tokensLoading && filteredTokenRows.length > 0">
+        <div class="history-item" *ngFor="let item of filteredTokenRows">
+          <div class="history-main">
+            <div class="history-info">
+              <span class="history-name">{{ item.name }}</span>
+              <span class="history-status">Status: {{ item.status }}</span>
+            </div>
+            <div class="history-meta">
+              <span class="history-id">{{ item.id }}</span>
+              <span class="history-datetime">{{ item.datetime }}</span>
+            </div>
+            <ion-icon name="ellipsis-vertical" class="history-menu" (click)="openHistoryMenu(item)"></ion-icon>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom nav -->
+  <div class="bottom-nav">
+    <a routerLink="/home" class="nav-item nav-active">
+      <ion-icon name="home"></ion-icon>
+      <span>Home</span>
+    </a>
+    <button type="button" class="nav-center-btn" (click)="onCenterAction()" aria-label="Main action">
+      <ion-icon name="close"></ion-icon>
+    </button>
+    <a routerLink="/profile" class="nav-item">
+      <ion-icon name="person-outline"></ion-icon>
+      <span>Profile</span>
+    </a>
+  </div>
+</ion-content>
