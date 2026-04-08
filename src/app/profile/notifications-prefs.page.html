@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/profile"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Notifications</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="notif-content">
+  <div class="notif-wrapper">
+    <p class="notif-intro">Choose which notifications you want to receive from xaccess.</p>
+
+    <div class="notif-list">
+      <div class="notif-item" *ngFor="let pref of prefs">
+        <div class="notif-info">
+          <ion-icon [name]="pref.icon" class="notif-icon"></ion-icon>
+          <div class="notif-text">
+            <span class="notif-label">{{ pref.label }}</span>
+            <span class="notif-desc">{{ pref.description }}</span>
+          </div>
+        </div>
+        <ion-toggle
+          [(ngModel)]="pref.enabled"
+          (ionChange)="onToggle(pref)"
+          class="notif-toggle"
+        ></ion-toggle>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom nav -->
+  <div class="bottom-nav">
+    <a routerLink="/home" class="nav-item">
+      <ion-icon name="home-outline"></ion-icon>
+      <span>Home</span>
+    </a>
+    <button type="button" class="nav-center-btn" (click)="onCenterAction()" aria-label="Main action">
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <a routerLink="/profile" class="nav-item nav-active">
+      <ion-icon name="person"></ion-icon>
+      <span>Profile</span>
+    </a>
+  </div>
+</ion-content>

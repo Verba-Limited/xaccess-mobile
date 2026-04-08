@@ -9,6 +9,7 @@ import { ProfileIdPage } from './profile-id.page';
 import { AccountPage } from './account.page';
 import { EditAccountPage } from './edit-account.page';
 import { ChangePasswordPage } from './change-password.page';
+import { NotificationsPrefsPage } from './notifications-prefs.page';
 
 @NgModule({
   imports: [
@@ -19,6 +20,6 @@ import { ChangePasswordPage } from './change-password.page';
     RouterModule,
     ProfilePageRoutingModule
   ],
-  declarations: [ProfilePage, ProfileIdPage, AccountPage, EditAccountPage, ChangePasswordPage]
+  declarations: [ProfilePage, ProfileIdPage, AccountPage, EditAccountPage, ChangePasswordPage, NotificationsPrefsPage]
 })
 export class ProfilePageModule {}

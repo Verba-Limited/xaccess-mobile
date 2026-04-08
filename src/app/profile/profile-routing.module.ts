@@ -5,13 +5,15 @@ import { AccountPage } from './account.page';
 import { EditAccountPage } from './edit-account.page';
 import { ChangePasswordPage } from './change-password.page';
 import { ProfileIdPage } from './profile-id.page';
+import { NotificationsPrefsPage } from './notifications-prefs.page';
 
 const routes: Routes = [
   { path: '', component: ProfilePage },
   { path: 'id', component: ProfileIdPage },
   { path: 'account', component: AccountPage },
   { path: 'account/edit', component: EditAccountPage },
-  { path: 'account/change-password', component: ChangePasswordPage }
+  { path: 'account/change-password', component: ChangePasswordPage },
+  { path: 'notifications', component: NotificationsPrefsPage },
 ];
 
 @NgModule({

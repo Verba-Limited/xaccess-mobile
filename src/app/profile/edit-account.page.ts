@@ -2,22 +2,25 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
-import { LoadingController, ToastController } from '@ionic/angular';
+import { LoadingController, ToastController, ViewWillEnter } from '@ionic/angular';
 import { finalize } from 'rxjs/operators';
+import { AuthApiService } from '../core/services/auth-api.service';
 import { UsersApiService } from '../core/services/users-api.service';
 import { TokenStorageService } from '../core/services/token-storage.service';
+
 @Component({
   selector: 'app-edit-account',
   templateUrl: './edit-account.page.html',
   styleUrls: ['./edit-account.page.scss'],
   standalone: false,
 })
-export class EditAccountPage {
+export class EditAccountPage implements ViewWillEnter {
   form: FormGroup;
 
   constructor(
     private readonly fb: FormBuilder,
     private readonly router: Router,
+    private readonly authApi: AuthApiService,
     private readonly usersApi: UsersApiService,
     private readonly tokens: TokenStorageService,
     private readonly loadingCtrl: LoadingController,
@@ -29,6 +32,24 @@ export class EditAccountPage {
       mobileNumber: [u?.phone ?? ''],
       email: [{ value: u?.email ?? '', disabled: true }],
       address: [u?.unitLabel ?? ''],
+    });
+  }
+
+  ionViewWillEnter(): void {
+    this.authApi.me().subscribe({
+      next: (res) => {
+        if (res.success && res.data) {
+          const u = res.data;
+          this.tokens.setUserSnapshot(u);
+          this.form.patchValue({
+            name: u.fullName,
+            mobileNumber: u.phone ?? '',
+            email: u.email,
+            address: u.unitLabel ?? '',
+          });
+        }
+      },
+      error: () => { /* keep existing form values */ },
     });
   }
 

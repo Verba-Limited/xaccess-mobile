@@ -10,8 +10,14 @@
       <div class="profile-avatar">
         <ion-icon name="person"></ion-icon>
       </div>
-      <h2 class="profile-name">User Name</h2>
-      <p class="profile-email">user@example.com</p>
+      <ng-container *ngIf="loading && !user">
+        <h2 class="profile-name">Loading…</h2>
+        <p class="profile-email">&nbsp;</p>
+      </ng-container>
+      <ng-container *ngIf="user">
+        <h2 class="profile-name">{{ user.fullName }}</h2>
+        <p class="profile-email">{{ user.email }}</p>
+      </ng-container>
     </div>
 
     <div class="profile-menu">
