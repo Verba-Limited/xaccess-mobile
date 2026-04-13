@@ -159,13 +159,17 @@ export class AccessControlPage implements ViewWillEnter {
         next: (res) => {
           void this.presentTokenCreatedAlert(res.token);
           this.loadTokens();
+          if (res.hint) {
+            void this.showToast(res.hint, 'success');
+          }
         },
         error: (err: HttpErrorResponse | Error) => void this.handleHttpError(err, 'Could not create token'),
       });
   }
 
   private buildCreatePayload(): CreateAccessTokenRequest | null {
-    const methods = { qr: true, password: false, rfid: false };
+    // Password mode: the 6-digit code is the PIN the guest enters at the physical keypad.
+    const methods = { qr: false, password: true, rfid: false };
 
     if (this.selectedAccessType === 'event') {
       if (this.eventForm.invalid) {
@@ -222,17 +226,17 @@ export class AccessControlPage implements ViewWillEnter {
 
   private async presentTokenCreatedAlert(plainToken: string): Promise<void> {
     const alert = await this.alertCtrl.create({
-      header: 'Access token created',
-      subHeader: 'Copy and store it securely. It cannot be shown again.',
-      message: plainToken,
+      header: 'Access PIN Created',
+      subHeader: 'Share this 6-digit PIN with your guest.',
+      message: `PIN: ${plainToken}\n\nYour guest enters this code on the access panel keypad to unlock the gate. It will be synced to the device automatically.\n\nThis PIN cannot be shown again — copy it now.`,
       buttons: [
         {
-          text: 'Copy',
+          text: 'Copy PIN',
           handler: () => {
             void this.copyText(plainToken);
           },
         },
-        'OK',
+        { text: 'Done' },
       ],
     });
     await alert.present();

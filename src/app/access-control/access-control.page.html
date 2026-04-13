@@ -64,11 +64,10 @@
         </div>
       </section>
 
-      <!-- Photo/QR placeholder - shown for Multi-Entry -->
-      <section *ngIf="selectedAccessType === 'multi-entry'" class="photo-placeholder-section">
-        <div class="photo-placeholder">
-          <ion-icon name="cloud-upload-outline" class="upload-icon"></ion-icon>
-        </div>
+      <!-- PIN mode info banner -->
+      <section class="pin-mode-banner">
+        <ion-icon name="keypad-outline" class="pin-mode-icon"></ion-icon>
+        <p>A 6-digit keypad PIN will be generated and automatically synced to the access panel. Share the PIN with your guest.</p>
       </section>
 
       <!-- Form: One-Time & Multi-Entry -->
@@ -116,13 +115,8 @@
           </div>
         </div>
 
-        <ion-item lines="none" class="checkbox-item">
-          <ion-checkbox formControlName="shareQrCode" slot="start"></ion-checkbox>
-          <ion-label>Share QR Code</ion-label>
-        </ion-item>
-
         <ion-button expand="block" type="submit" class="generate-btn">
-          Generate Access token
+          Generate Access PIN
         </ion-button>
       </form>
 

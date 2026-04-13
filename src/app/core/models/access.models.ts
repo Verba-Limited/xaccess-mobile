@@ -41,7 +41,9 @@ export interface CreateAccessTokenResponse {
   methods: { qr: boolean; password: boolean; rfid: boolean };
   guestName: string | null;
   type: string;
-  warning: string;
+  /** hint replaces warning for password-mode tokens */
+  hint?: string;
+  warning?: string;
 }
 
 /** `POST /access/tokens/:id/revoke` */
