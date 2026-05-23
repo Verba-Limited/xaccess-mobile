@@ -175,6 +175,195 @@ ion-header {
   color: #111827;
 }
 
+.control-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding-right: 0.75rem;
+}
+
+.control-sub {
+  font-size: 0.7rem;
+  color: #6b7280;
+  font-weight: 400;
+}
+
+.period-hint {
+  font-size: 0.7rem;
+  color: #6b7280;
+  margin: 0 0 0.75rem;
+}
+
+.loading-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 3rem 1rem;
+  color: #6b7280;
+  font-size: 0.875rem;
+}
+
+.error-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+
+  ion-icon {
+    font-size: 1.25rem;
+    color: #dc2626;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  p {
+    margin: 0;
+    font-size: 0.8125rem;
+    color: #991b1b;
+    line-height: 1.4;
+  }
+}
+
+.empty-chart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.5rem;
+  padding: 1.5rem 0.5rem;
+  color: #6b7280;
+
+  ion-icon {
+    font-size: 2rem;
+    color: #d1d5db;
+  }
+
+  p {
+    margin: 0;
+    font-size: 0.8125rem;
+    max-width: 280px;
+    line-height: 1.4;
+  }
+}
+
+/* Prepaid subscription */
+.subscription-card {
+  background: linear-gradient(145deg, #fff7ed 0%, #ffffff 55%);
+  border: 1px solid #fed7aa;
+  border-radius: 14px;
+  padding: 1.25rem;
+  margin-bottom: 1.25rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.subscription-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #111827;
+  margin: 0 0 0.35rem;
+}
+
+.subscription-meta {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin: 0 0 1rem;
+  line-height: 1.4;
+}
+
+.subscription-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.sub-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 0.875rem;
+  color: #4b5563;
+
+  strong {
+    color: #111827;
+    font-weight: 600;
+  }
+}
+
+.subscription-hint {
+  font-size: 0.8125rem;
+  color: #92400e;
+  margin: 0 0 1rem;
+  line-height: 1.45;
+}
+
+.subscription-warn {
+  font-size: 0.8125rem;
+  color: #b45309;
+  margin: 0 0 0.75rem;
+  line-height: 1.45;
+}
+
+.pay-btn {
+  --background: #f97316;
+  --background-activated: #ea580c;
+  --color: #ffffff;
+  font-weight: 600;
+  margin-top: 0.25rem;
+}
+
+.pay-spinner {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-right: 0.5rem;
+  vertical-align: middle;
+}
+
+.pay-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+.pay-alt-hint {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin: 0 0 0.25rem;
+  line-height: 1.45;
+  text-align: center;
+}
+
+.paystack-step-hint {
+  font-size: 0.8125rem;
+  color: #374151;
+  margin: 0 0 0.5rem;
+  line-height: 1.45;
+  padding: 0.65rem 0.75rem;
+  border-radius: 10px;
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+}
+
+.pay-demo-btn {
+  --color: #6b7280;
+  font-size: 0.8125rem;
+  margin-top: 0;
+}
+
+.confirm-paystack-btn {
+  --border-color: #f97316;
+  --color: #c2410c;
+  font-weight: 600;
+  margin-top: 0.25rem;
+}
+
 /* Bottom nav */
 .bottom-nav {
   position: fixed;

@@ -13,7 +13,7 @@
     <div class="outstanding-card">
       <div class="outstanding-main">
         <div class="outstanding-left">
-          <span class="outstanding-label">Total amount due</span>
+          <span class="outstanding-label">Outstanding bills (total due)</span>
           <span class="outstanding-amount" *ngIf="hasOutstandingPayment">{{ totalAmountDue }}</span>
           <span class="outstanding-none" *ngIf="!hasOutstandingPayment">No Outstanding Payment</span>
           <span class="outstanding-due">Due Date: {{ hasOutstandingPayment ? dueDate : '' }}</span>

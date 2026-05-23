@@ -9,70 +9,192 @@
 
 <ion-content class="manage-utility-content">
   <div class="manage-utility-wrapper">
-    <!-- Utility Usage Card -->
-    <div class="utility-usage-card">
-      <div class="card-header">
-        <h2 class="card-title">Utility Usage</h2>
-        <ion-item lines="none" class="period-select">
-          <ion-select
-            [(ngModel)]="period"
-            interface="action-sheet"
-            (ionChange)="onPeriodChange()"
+    <div *ngIf="loadError" class="error-banner" role="alert">
+      <ion-icon name="alert-circle-outline"></ion-icon>
+      <p>{{ loadError }}</p>
+    </div>
+
+    <div *ngIf="loading && !loadError" class="loading-wrap">
+      <ion-spinner name="crescent" color="primary"></ion-spinner>
+      <p>Loading usage…</p>
+    </div>
+
+    <ng-container *ngIf="!loading && !loadError">
+      <!-- Prepaid subscription (API v1) -->
+      <div *ngIf="subscription" class="subscription-card">
+        <h2 class="subscription-title">Prepaid utilities</h2>
+        <p class="subscription-meta">
+          {{ measurementPeriodLabel }} billing · period {{ subscription.periodKey }}
+        </p>
+        <div class="subscription-rows">
+          <div class="sub-row">
+            <span>Service charge</span>
+            <strong>{{
+              formatMoney(subscription.serviceChargeMinor, subscription.currency)
+            }}</strong>
+          </div>
+          <div class="sub-row" *ngIf="subscription.paidForPeriod">
+            <span>Power left</span>
+            <strong
+              >{{ subscription.remainingPowerKwh | number : '1.0-1' }} kWh</strong
+            >
+          </div>
+          <div class="sub-row" *ngIf="subscription.paidForPeriod">
+            <span>Water left</span>
+            <strong
+              >{{ subscription.remainingWaterM3 | number : '1.2-2' }} m³</strong
+            >
+          </div>
+        </div>
+        <p *ngIf="!subscription.paidForPeriod" class="subscription-hint">
+          Pay the estate service charge to unlock your included power and water for this period.
+        </p>
+        <p
+          *ngIf="subscription.paidForPeriod && !subscription.canUsePower && utilityGate?.reasonPower"
+          class="subscription-warn"
+        >
+          {{ utilityGate?.reasonPower }}
+        </p>
+        <p
+          *ngIf="subscription.paidForPeriod && !subscription.canUseWater && utilityGate?.reasonWater"
+          class="subscription-warn"
+        >
+          {{ utilityGate?.reasonWater }}
+        </p>
+        <div *ngIf="!subscription.paidForPeriod" class="pay-actions">
+          <ion-button
+            expand="block"
+            class="pay-btn"
+            (click)="onPayWithPaystack()"
+            [disabled]="paystackBusy || payBusy"
           >
-            <ion-select-option value="Monthly">Monthly</ion-select-option>
-            <ion-select-option value="Quarterly">Quarterly</ion-select-option>
-            <ion-select-option value="Annual">Annual</ion-select-option>
-          </ion-select>
-        </ion-item>
+            <ion-spinner
+              *ngIf="paystackBusy"
+              name="crescent"
+              class="pay-spinner"
+            ></ion-spinner>
+            {{
+              paystackBusy
+                ? 'Starting checkout…'
+                : 'Pay with Paystack (card or bank)'
+            }}
+          </ion-button>
+          <p class="pay-alt-hint">
+            Secured by Paystack — pay with card, bank transfer, or USSD where available.
+          </p>
+          <p *ngIf="pendingPaystackRef" class="paystack-step-hint">
+            After Paystack shows a successful payment, tap <strong>Confirm Paystack payment</strong> below so we
+            can verify with Paystack and unlock your utilities.
+          </p>
+          <ion-button
+            expand="block"
+            fill="clear"
+            size="small"
+            class="pay-demo-btn"
+            (click)="onPaySubscription()"
+            [disabled]="payBusy || paystackBusy"
+          >
+            <ion-spinner *ngIf="payBusy" name="crescent" class="pay-spinner"></ion-spinner>
+            {{ payBusy ? 'Processing…' : 'Pay without card (demo only)' }}
+          </ion-button>
+          <ion-button
+            *ngIf="pendingPaystackRef"
+            expand="block"
+            fill="outline"
+            class="confirm-paystack-btn"
+            (click)="onConfirmPaystackPayment()"
+            [disabled]="verifyBusy"
+          >
+            <ion-spinner *ngIf="verifyBusy" name="crescent" class="pay-spinner"></ion-spinner>
+            {{ verifyBusy ? 'Confirming…' : 'Confirm Paystack payment' }}
+          </ion-button>
+        </div>
       </div>
 
-      <div class="chart-container">
-        <div class="chart-bars">
-          <div class="chart-month" *ngFor="let d of chartData; let i = index">
-            <div class="month-group">
-              <div class="bar power-bar" [style.height.%]="d.power"></div>
-              <div class="bar water-bar" [style.height.%]="d.water"></div>
+      <!-- Utility Usage Card -->
+      <div class="utility-usage-card">
+        <div class="card-header">
+          <h2 class="card-title">Utility Usage</h2>
+          <ion-item lines="none" class="period-select">
+            <ion-select
+              [(ngModel)]="period"
+              interface="action-sheet"
+              (ionChange)="onPeriodChange()"
+              [disabled]="prefsBusy"
+            >
+              <ion-select-option value="Monthly">Monthly</ion-select-option>
+              <ion-select-option value="Quarterly">Quarterly</ion-select-option>
+              <ion-select-option value="Annual">Annual</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </div>
+
+        <p class="period-hint" *ngIf="chartPoints.length">
+          Showing {{ chartPoints.length }} period(s). Latest reading: {{ latestMonthLabel }}.
+        </p>
+
+        <div class="chart-container" *ngIf="chartPoints.length; else emptyChart">
+          <div class="chart-bars">
+            <div class="chart-month" *ngFor="let p of chartPoints; trackBy: trackByLabel">
+              <div class="month-group">
+                <div class="bar power-bar" [style.height.%]="p.powerPct"></div>
+                <div class="bar water-bar" [style.height.%]="p.waterPct"></div>
+              </div>
+              <span class="month-label">{{ p.label }}</span>
             </div>
-            <span class="month-label">{{ months[i] }}</span>
+          </div>
+        </div>
+        <ng-template #emptyChart>
+          <div class="empty-chart">
+            <ion-icon name="stats-chart-outline"></ion-icon>
+            <p>No usage readings yet. They will appear once your estate records meter data.</p>
+          </div>
+        </ng-template>
+
+        <div class="usage-legend" *ngIf="chartPoints.length">
+          <div class="legend-item">
+            <span class="legend-dot power-dot"></span>
+            <span>Power (period total)</span>
+            <span class="legend-value">{{ electricityDisplay }}</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-dot water-dot"></span>
+            <span>Water (period total)</span>
+            <span class="legend-value">{{ waterLitersDisplay }} L</span>
           </div>
         </div>
       </div>
 
-      <div class="usage-legend">
-        <div class="legend-item">
-          <span class="legend-dot power-dot"></span>
-          <span>Power Usage</span>
-          <span class="legend-value">1,200 kWh</span>
+      <!-- Control Toggles -->
+      <div class="control-card">
+        <div class="control-row">
+          <div class="control-text">
+            <span class="control-label">Water Control</span>
+            <span class="control-sub">Remote valve / alert preference</span>
+          </div>
+          <ion-toggle
+            [(ngModel)]="waterControlOn"
+            color="success"
+            (ionChange)="onWaterToggle()"
+            [disabled]="waterToggleDisabled"
+          ></ion-toggle>
         </div>
-        <div class="legend-item">
-          <span class="legend-dot water-dot"></span>
-          <span>Water Usage</span>
-          <span class="legend-value">1000 Liters</span>
+      </div>
+      <div class="control-card">
+        <div class="control-row">
+          <div class="control-text">
+            <span class="control-label">Power Control</span>
+            <span class="control-sub">Circuit / smart meter preference</span>
+          </div>
+          <ion-toggle
+            [(ngModel)]="powerControlOn"
+            color="success"
+            (ionChange)="onPowerToggle()"
+            [disabled]="powerToggleDisabled"
+          ></ion-toggle>
         </div>
       </div>
-    </div>
-
-    <!-- Control Toggles -->
-    <div class="control-card">
-      <div class="control-row">
-        <span class="control-label">Water Control</span>
-        <ion-toggle
-          [(ngModel)]="waterControlOn"
-          color="success"
-          (ionChange)="onWaterToggle()"
-        ></ion-toggle>
-      </div>
-    </div>
-    <div class="control-card">
-      <div class="control-row">
-        <span class="control-label">Power Control</span>
-        <ion-toggle
-          [(ngModel)]="powerControlOn"
-          color="success"
-          (ionChange)="onPowerToggle()"
-        ></ion-toggle>
-      </div>
-    </div>
+    </ng-container>
   </div>
 
   <!-- Bottom nav -->

@@ -63,6 +63,9 @@
             <span class="card-icon-wrap" style="margin-top: 25px;"><ion-icon name="receipt-outline" class="card-icon"></ion-icon></span>
             <div class="card-text" style="margin-top: 45px;">
               <h3>My Invoice</h3>
+              <p *ngIf="billingOutstanding" class="card-billing-hint">
+                Outstanding bill<span *ngIf="billingDueLabel"> · due {{ billingDueLabel }}</span>
+              </p>
               <p class="card-link">View <span class="card-arrow-wrap"><ion-icon name="arrow-forward-outline"></ion-icon></span></p>
             </div>
           </div>

@@ -5,6 +5,7 @@ import { ToastController, ViewWillEnter } from '@ionic/angular';
 import { finalize } from 'rxjs/operators';
 import { AccessApiService } from '../core/services/access-api.service';
 import { AuthApiService } from '../core/services/auth-api.service';
+import { BillingApiService } from '../core/services/billing-api.service';
 import { TokenStorageService } from '../core/services/token-storage.service';
 import { AccessLogDto } from '../core/models/access.models';
 
@@ -85,10 +86,15 @@ export class HomePage implements OnInit, ViewWillEnter {
   /** Resident with no `communityId` — show join-estate banner */
   communityMissing = false;
 
+  /** Facility-assigned invoices (My Invoice summary) */
+  billingOutstanding = false;
+  billingDueLabel = '';
+
   constructor(
     private readonly router: Router,
     private readonly accessApi: AccessApiService,
     private readonly authApi: AuthApiService,
+    private readonly billingApi: BillingApiService,
     private readonly tokens: TokenStorageService,
     private readonly toastCtrl: ToastController,
   ) {}
@@ -114,6 +120,32 @@ export class HomePage implements OnInit, ViewWillEnter {
   private loadDashboard(): void {
     this.refreshUserFromApi();
     this.loadAccessHistory();
+    this.loadBillingSummary();
+  }
+
+  private loadBillingSummary(): void {
+    const u = this.tokens.getUserSnapshot();
+    if (!u?.communityId || u.role !== 'RESIDENT') {
+      this.billingOutstanding = false;
+      this.billingDueLabel = '';
+      return;
+    }
+    this.billingApi.summary().subscribe({
+      next: (s) => {
+        this.billingOutstanding = s.hasOutstanding;
+        this.billingDueLabel = s.nextDueDate
+          ? new Date(s.nextDueDate + 'T12:00:00').toLocaleDateString('en-US', {
+              month: 'short',
+              day: 'numeric',
+              year: 'numeric',
+            })
+          : '';
+      },
+      error: () => {
+        this.billingOutstanding = false;
+        this.billingDueLabel = '';
+      },
+    });
   }
 
   /** Keep cached user in sync with server (role, community, etc.). */
@@ -127,6 +159,7 @@ export class HomePage implements OnInit, ViewWillEnter {
           this.communityMissing =
             res.data.role === 'RESIDENT' && !res.data.communityId;
         }
+        this.loadBillingSummary();
       },
       error: () => {
         /* offline or expired — keep snapshot */
